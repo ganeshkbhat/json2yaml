@@ -1,4 +1,9 @@
-function parseYAMLWithComments(yamlString) {
+
+// yaml-json-converter.js
+// To run this file, first install the dependency: npm install js-yaml
+
+
+function fromYAML(yamlString) {
     const lines = yamlString.split('\n');
     const data = {};
     let currentLevel = data;
@@ -134,28 +139,7 @@ function parseYAMLWithComments(yamlString) {
     return data;
 }
 
-
-
-// Example with anchors and aliases:
-const yamlString = `
-name: My Application
-settings: &settings_block  # Anchor for settings
-  database:
-    host: localhost
-    port: 3306
-  api_key: "YOUR_API_KEY"
-
-another_settings: *settings_block # Alias to settings
-
-more_settings: &more_settings
-  db:
-    host: remotehost
-
-copy_of_more_settings: *more_settings
-`;
-
-const yamlData = parseYAMLWithComments(yamlString);
-
-if (yamlData) {
-    console.log(JSON.stringify(yamlData, null, 2));
+module.exports = {
+    toYAML,
+    fromYAML
 }

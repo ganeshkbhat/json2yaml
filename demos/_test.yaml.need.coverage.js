@@ -1,7 +1,7 @@
 const assert = require('chai').assert;
 const expect = require('chai').expect;
 const sinon = require('sinon');
-const { parseYAMLWithComments } = require('../src/old-weak-yaml'); // Replace with the path to your YAML parser file
+const { fromYAML, toYAML } = require('../index'); // Replace with the path to your YAML parser file
 
 describe('YAML Parser', () => {
     it('should parse simple key-value pairs', () => {
@@ -10,7 +10,7 @@ name: My Application
 version: 1.0.0
 `;
         const expected = { name: 'My Application', version: '1.0.0' };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -23,7 +23,7 @@ version: 1.0.0 # Inline comment
 
 `;
         const expected = { name: 'My Application', version: '1.0.0' };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -42,7 +42,7 @@ settings:
                 },
             },
         };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -56,7 +56,7 @@ description: |
         const expected = {
             description: 'This is a multi-line string\nthat spans multiple lines.\nIt preserves newlines.',
         };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -70,7 +70,7 @@ folded: >
         const expected = {
             folded: 'This is a folded string\nthat gets converted to a single line.\nNewlines are replaced by spaces.', // For now, folded is treated the same as literal.
         };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -98,7 +98,7 @@ another_settings: *settings_block
                 },
             },
         };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -126,7 +126,7 @@ another_settings:
                 },
             },
         };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -135,7 +135,7 @@ another_settings:
 items: [1, 2, 3]
 `;
         const expected = { items: [1, 2, 3] };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -144,7 +144,7 @@ items: [1, 2, 3]
 object: {a: 1, b: 2}
 `;
         const expected = { object: { a: 1, b: 2 } };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -154,7 +154,7 @@ bool_true: true
 bool_false: false
 `;
         const expected = { bool_true: true, bool_false: false };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -163,7 +163,7 @@ bool_false: false
 nothing: null
 `;
         const expected = { nothing: null };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -172,7 +172,7 @@ nothing: null
 number: 123
 `;
         const expected = { number: 123 };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -187,7 +187,7 @@ alias: *parent_anchor
             parent: { child: 'value' },
             alias: { child: 'value' }
         };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -244,7 +244,7 @@ number: 42
             nothing: null,
             number: 42,
         };
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.deep.equal(expected);
     });
 
@@ -252,7 +252,7 @@ number: 42
         const yamlString = `
 items: [1, 2, "invalid json"]
 `;
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.be.null; // Or assert that an error is thrown if you prefer
     });
 
@@ -260,7 +260,7 @@ items: [1, 2, "invalid json"]
         const yamlString = `
 alias: *nonexistent_anchor
 `;
-        const result = parseYAMLWithComments(yamlString);
+        const result = fromYAML(yamlString);
         expect(result).to.be.null;
     });
 

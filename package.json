@@ -1,0 +1,17 @@
+{
+  "name": "parse-yaml",
+  "version": "1.0.0",
+  "description": "parse yaml files and convert two fro to json and yaml",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec --recursive --timeout 60000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^6.2.0",
+    "mocha": "^11.7.4",
+    "sinon": "^21.0.0"
+  }
+}
