@@ -1,4 +1,4 @@
-# json2yaml
+# parseryaml
 json to yaml or yaml to json
 
 #### json to yaml
