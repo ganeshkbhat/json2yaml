@@ -1,6 +1,6 @@
 {
   "name": "yaml-parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "parse yaml files and convert two fro to json and yaml",
   "main": "index.js",
   "scripts": {
