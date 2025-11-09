@@ -7,11 +7,18 @@
     "test": "mocha --reporter spec --recursive --timeout 60000"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Ganesh",
+    "email": "ganeshsurfs@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ganeshkbhat/json2yaml.git"
+  },
   "license": "MIT",
   "devDependencies": {
-    "chai": "^6.2.0",
-    "mocha": "^11.7.4",
-    "sinon": "^21.0.0"
+    "chai": "^5.1.2",
+    "mocha": "^11.1.0",
+    "sinon": "^19.0.2"
   }
 }
